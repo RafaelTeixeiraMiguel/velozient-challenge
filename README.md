@@ -1,3 +1,11 @@
+# DEV Comments
+
+Hello!
+I would like to elaborate a little on my decisions for this challenge, step-by-step:
+1. The first thing I like to do is solve the problem. Just do what is necessary and be sure that everything is working as expected.
+2. The second step is to see the problem, the solution and how it can improve. Here, I try to decide what kind of approach I am gonna use, what kind of patterns I can use. While I don't want to overthink and create something complex for simple solutions, I like to think of solutions that will work in the long term. Here, in this challenge, I decided that the best approach is just a simple Service - > Repository layer. This made unit tests way easier to follow and understand and decoupled the code just enough so, in future implementations, we already have a structure that can support scalability.
+3. The third step is refactoring. I go back to my solution and, after having decided the approach, I start to decouple and rewrite the code as best as possible, following what I decided. 
+
 # Overview
 
 The point of this brief exercise is to help us better understand your ability to work through problems, design solutions, and work in an existing codebase. It's important that the solution you provide meets all the requirements, demonstrates clean code, and is scalable.
