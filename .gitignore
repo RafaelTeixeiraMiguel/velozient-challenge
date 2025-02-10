@@ -4,3 +4,12 @@
 
 /ThirFileOutput
 *.sqlite
+/.vs/SmartVault.Interview
+/SmartVault.CodeGeneration/bin
+/SmartVault.CodeGeneration/obj
+/SmartVault.DataGeneration/bin
+/SmartVault.DataGeneration/obj
+/SmartVault.Program/bin
+/SmartVault.Program/obj
+/SmartVault.Tests/bin
+/SmartVault.Tests/obj
