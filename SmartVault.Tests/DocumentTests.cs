@@ -46,21 +46,21 @@ namespace Tests
         [Fact]
         public void GetAllFileSizesForExistentFiles()
         {
-            string filePath1 = CreateTempFile("File1.txt", "XXXXX");
+            string filePath1 = CreateTempFile("File1.txt", "XXXXXXXXXX");
             string filePath2 = CreateTempFile("File2.txt", "XXXXXXXXXX");
 
             connection.Execute($"INSERT INTO Document (AccountId, FilePath) VALUES ('1', '{filePath1}'), ('1', '{filePath2}')");
 
             long totalFileSize = _documentService.GetAllFileSizes();
 
-            Assert.Equal(15, totalFileSize);
+            Assert.Equal(20, totalFileSize);
         }
 
         [Fact]
         public void WriteEveryThirdFileToFileCreatesAndWritesFileEmptyContent()
         {
-            string filePath1 = CreateTempFile("File1.txt", "Content 1");
-            string filePath2 = CreateTempFile("File2.txt", "Content 2");
+            string filePath1 = CreateTempFile("File1.txt", "TEXT 1");
+            string filePath2 = CreateTempFile("File2.txt", "TEXT 2");
 
             connection.Execute($"INSERT INTO Document (AccountId, FilePath) VALUES ('1', '{filePath1}'), ('1', '{filePath2}')");
 
@@ -74,10 +74,10 @@ namespace Tests
         [Fact]
         public void WriteEveryThirdFileToFileCreatesAndWritesFile()
         {
-            string filePath1 = CreateTempFile("File1.txt", "Not relevant");
-            string filePath2 = CreateTempFile("File2.txt", "Not relevant");
+            string filePath1 = CreateTempFile("File1.txt", "TEXT");
+            string filePath2 = CreateTempFile("File2.txt", "TEXT");
             string filePath3 = CreateTempFile("File3.txt", "Smith Property");
-            string filePath4 = CreateTempFile("File4.txt", "Not relevant");
+            string filePath4 = CreateTempFile("File4.txt", "TEXT");
 
             connection.Execute($@"
             INSERT INTO Document (AccountId, FilePath) 
