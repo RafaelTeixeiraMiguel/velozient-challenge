@@ -1,4 +1,5 @@
 using Dapper;
+using SmartVault.Program.Service.Document;
 using System;
 using System.Data.SQLite;
 using System.IO;
@@ -6,19 +7,20 @@ using Xunit;
 
 namespace Tests
 {
-    public class Tests
+    public class DocumentTests
     {
         private readonly SQLiteConnection connection;
+        private readonly IDocumentService _documentService;
         private readonly string tempDirectory;
 
-        public Tests()
+        public DocumentTests()
         {
             connection = new SQLiteConnection("Data Source=:memory:;Version=3;");
             connection.Open();
 
+            _documentService = new DocumentService(connection);
             connection.Execute("CREATE TABLE Document (Id INTEGER PRIMARY KEY,Name TEXT,FilePath TEXT,Length INTEGER,AccountId INTEGER,CreatedOn TEXT);");
 
-            SmartVault.Program.Program.BuildConnection(connection);
             tempDirectory = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             Directory.CreateDirectory(tempDirectory);
         }
@@ -26,7 +28,7 @@ namespace Tests
         [Fact]
         public void GetAllFileSizesReturnsZeroForEmptyDatabase()
         {
-            long totalFileSize = SmartVault.Program.Program.GetAllFileSizes();
+            long totalFileSize = _documentService.GetAllFileSizes();
 
             Assert.Equal(0, totalFileSize);
         }
@@ -36,7 +38,7 @@ namespace Tests
         {
             connection.Execute("INSERT INTO Document (AccountId, FilePath) VALUES ('1', 'NonExistentFile.txt')");
 
-            long totalFileSize = SmartVault.Program.Program.GetAllFileSizes();
+            long totalFileSize = _documentService.GetAllFileSizes();
 
             Assert.Equal(0, totalFileSize);
         }
@@ -49,7 +51,7 @@ namespace Tests
 
             connection.Execute($"INSERT INTO Document (AccountId, FilePath) VALUES ('1', '{filePath1}'), ('1', '{filePath2}')");
 
-            long totalFileSize = SmartVault.Program.Program.GetAllFileSizes();
+            long totalFileSize = _documentService.GetAllFileSizes();
 
             Assert.Equal(15, totalFileSize);
         }
@@ -62,7 +64,7 @@ namespace Tests
 
             connection.Execute($"INSERT INTO Document (AccountId, FilePath) VALUES ('1', '{filePath1}'), ('1', '{filePath2}')");
 
-            SmartVault.Program.Program.WriteEveryThirdFileToFile("1");
+            _documentService.WriteEveryThirdFileToFile(1);
 
             string outputFilePath = Path.Combine("../../../../ThirFileOutput", "1.txt");
             Assert.True(File.Exists(outputFilePath));
@@ -85,7 +87,7 @@ namespace Tests
                 ('1', '{filePath3}'),
                 ('1', '{filePath4}')");
 
-            SmartVault.Program.Program.WriteEveryThirdFileToFile("1");
+            _documentService.WriteEveryThirdFileToFile(1);
 
             string outputFilePath = Path.Combine("../../../../ThirFileOutput", "1.txt");
             Assert.True(File.Exists(outputFilePath));

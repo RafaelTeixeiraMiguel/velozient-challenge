@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartVault.Program.BusinessObjects
+namespace SmartVault.Program.Service.Base
 {
-    public partial class Document : BaseBusinessObject
+    public interface IBaseService
     {
     }
 }

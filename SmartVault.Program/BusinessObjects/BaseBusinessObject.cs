@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartVault.Program.BusinessObjects
 {
-    public partial class Document : BaseBusinessObject
+    public abstract class BaseBusinessObject
     {
     }
 }
